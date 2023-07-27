@@ -5,9 +5,7 @@ import hello.itemservice.domain.Item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -26,7 +24,7 @@ public class BasicItemController {
         return "basic/items";
     }
 
-    @GetMapping("/{itemID}")
+    @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
@@ -37,6 +35,43 @@ public class BasicItemController {
     public String addForm() {
         return "basic/addForm";
     }
+
+//    @PostMapping("/add")
+//    public String addItemV1(@RequestParam String itemName, // itemName 요청 파라미터 데이터를 해당 변수에 받는다.
+//                            @RequestParam int price,
+//                            @RequestParam Integer quantity,
+//                            Model model) {
+//        Item item = new Item();
+//        item.setItemName(itemName);
+//        item.setPrice(price);
+//        item.setQuantity(quantity);
+//
+//        itemRepository.save(item);
+//
+//
+//        // 저장된 item을 모델에 담아서 뷰에 전달한다.
+//        model.addAttribute("item", item);
+//
+//        return "basic/item";
+//    }
+
+    // @ModelAttribute는 Item 객체를 생성하고, 요청 파라미터의 값을 프로퍼티 접근법(setXxx)으로
+    // 입력해준다.
+    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute Item item) {
+        itemRepository.save(item);
+        // model.addAttribute("item", item); // 자동 추가, 생략 가능
+        return "basic/item";
+    }
+
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+
 
     /*
     테스트용 데이터 추가
