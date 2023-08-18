@@ -1,4 +1,4 @@
-package hello.itemservice.domain.Item;
+package hello.itemservice.domain.item;
 
 import org.springframework.stereotype.Repository;
 
@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ItemRepository {
+public class ItemRepository {  // 상품 저장소
 
     private static final Map<Long, Item> store = new HashMap<>();
     private static long sequence = 0L; // static 사용
 
     public Item save(Item item) {
-        item.setId(++sequence);
-        store.put(item.getId(), item);
+        item.setId(++sequence); // itemId 자동 할당 => 추가 시 1씩 증가
+        store.put(item.getId(), item); //
         return item;
     }
 

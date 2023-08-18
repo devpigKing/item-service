@@ -1,10 +1,7 @@
 package hello.itemservice.domain.item;
 
-import hello.itemservice.domain.Item.Item;
-import hello.itemservice.domain.Item.ItemRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
